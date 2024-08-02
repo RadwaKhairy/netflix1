@@ -21,7 +21,6 @@ pipeline{
         }
         stage("Sonarqube Analysis "){
             steps{
-                sh 'mvn clean package'
                 withSonarQubeEnv('sonar-server') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Netflix \
                     -Dsonar.projectKey=Netflix '''
