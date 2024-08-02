@@ -3,6 +3,7 @@ pipeline{
     tools{
         jdk 'jdk 17'
         nodejs 'node 16'
+        sonarQube 'SonarQube Scanner 6.1.0.4477'
     }
     environment {
         SCANNER_HOME=tool 'sonar-scanner'
@@ -20,6 +21,7 @@ pipeline{
         }
         stage("Sonarqube Analysis "){
             steps{
+                sh 'mvn clean package'
                 withSonarQubeEnv('sonar-server') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Netflix \
                     -Dsonar.projectKey=Netflix '''
@@ -29,7 +31,7 @@ pipeline{
         stage("quality gate"){
            steps {
                 script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token' 
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-cred' 
                 }
             } 
         }
