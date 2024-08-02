@@ -3,7 +3,7 @@ pipeline{
     tools{
         jdk 'jdk 17'
         nodejs 'node 16'
-        sonarQube 'SonarQube Scanner 6.1.0.4477'
+        
     }
     environment {
         SCANNER_HOME=tool 'sonar-scanner'
